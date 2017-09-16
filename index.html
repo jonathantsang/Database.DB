@@ -1,0 +1,49 @@
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+<head>
+	<form id="target">
+      <input id="m" autocomplete="off" class="input"/>
+	  <br>
+      <button type="submit" class="btn btn-success send">Search</button>
+    </form>
+</head>
+
+<script>
+$(document).ready( function (){
+
+noteid = 1;
+$.ajax({
+    type: "POST",
+    url: "/",
+    data: '{"email":"' + noteid+'"}',
+    contentType: "application/json; charset=utf-8",
+    success: function(data) {
+        alert(data);
+    },
+    error: function(data){
+        alert("fail");
+    }
+}).fail(function ( jqXHR, textStatus, errorThrown ) {
+    console.log(jqXHR);
+    console.log(textStatus);
+    console.log(errorThrown);
+});
+
+	console.log("ready");
+	// When the button is pressed, query the tickers
+	$('#target').submit(function() {
+
+
+		var query = $('#m');
+		console.log("submitted");
+		console.log(query.val());
+		$.post("/", { email: query.val() });
+
+		return false;
+	});
+});
+</script>
+
+
+</html>
